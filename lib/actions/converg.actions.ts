@@ -108,3 +108,46 @@ export async function fetchConvergById(id: string) {
     throw new Error(`Error fetching converg: ${error.message}`);
   }
 }
+
+export async function addCommentToConverg(
+  convergId: string,
+  commentText: string,
+  userId: string,
+  path: string
+) {
+  connectToDB();
+
+  try {
+    // Adding a comment
+    // Find the original post by its id
+    const originalConverg = await Converg.findById(convergId);
+
+    if (!originalConverg) {
+      throw new Error("Converg not found.");
+    }
+
+    // Create a new post with the comment text
+
+    const commentConverg = new Converg({
+      text: commentText,
+      author: userId,
+      parentId: convergId,
+    });
+
+    // Save the new post
+
+    const savedCommentConverg = await commentConverg.save();
+
+    // Update the original post to include the new comment
+
+    originalConverg.children.push(savedCommentConverg._id);
+
+    // Save the original post
+
+    await originalConverg.save();
+
+    revalidatePath(path);
+  } catch (error: any) {
+    throw new Error(`Error adding comment to converg: ${error.message}`);
+  }
+}

@@ -1,4 +1,5 @@
 import ConvergCard from "@/components/cards/ConvergCard";
+import Comment from "@/components/forms/Comment";
 import { fetchConvergById } from "@/lib/actions/converg.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 
@@ -30,6 +31,30 @@ const Page = async ({ params }: { params: { id: string } }) => {
           createdAt={converg.createdAt}
           comments={converg.children}
         />
+      </div>
+      <div className="mt-7">
+        <Comment
+          convergId={converg.id}
+          currentUserImg={userInfo.image}
+          currentUserId={JSON.stringify(userInfo._id)}
+        />
+      </div>
+
+      <div className="mt-10">
+        {converg.children.map((childItem: any) => (
+          <ConvergCard
+            key={childItem._id}
+            id={childItem._id}
+            currentUserId={childItem?.id || ""}
+            parentId={childItem.parentId}
+            content={childItem.text}
+            author={childItem.author}
+            community={childItem.community}
+            createdAt={childItem.createdAt}
+            comments={childItem.children}
+            isComment
+          />
+        ))}
       </div>
     </section>
   );
