@@ -65,6 +65,7 @@ const ConvergCard = ({
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
             <div className="mt-5 flex flex-col gap-3">
               <div className="flex gap-3.5">
+                {/* TODO: Like */}
                 <Image
                   src="/assets/heart-gray.svg"
                   alt="Heart image."
@@ -72,6 +73,7 @@ const ConvergCard = ({
                   height={24}
                   className=" cursor-pointer object-contain"
                 />
+                {/* DONE: Reply */}
                 <Link href={`/converg/${id}`}>
                   <Image
                     src="/assets/reply.svg"
@@ -81,6 +83,7 @@ const ConvergCard = ({
                     className=" cursor-pointer object-contain"
                   />
                 </Link>
+                {/* TODO: Repost */}
                 <Image
                   src="/assets/repost.svg"
                   alt="Repost image."
@@ -88,6 +91,7 @@ const ConvergCard = ({
                   height={24}
                   className=" cursor-pointer object-contain"
                 />
+                {/* TODO: Share */}
                 <Image
                   src="/assets/share.svg"
                   alt="Share image."
