@@ -72,3 +72,39 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
 
   return { posts, isNext };
 }
+
+export async function fetchConvergById(id: string) {
+  connectToDB();
+  try {
+    // TODO: Populate Community
+    const converg = await Converg.findById(id)
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id id name image",
+      })
+      .populate({
+        path: "children",
+        populate: [
+          {
+            path: "author",
+            model: User,
+            select: "_id id name parentId image",
+          },
+          {
+            path: "children",
+            model: Converg,
+            populate: {
+              path: "author",
+              model: User,
+              select: "_id id name parentId image",
+            },
+          },
+        ],
+      })
+      .exec();
+    return converg;
+  } catch (error: any) {
+    throw new Error(`Error fetching converg: ${error.message}`);
+  }
+}
