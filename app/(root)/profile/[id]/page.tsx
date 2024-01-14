@@ -1,14 +1,14 @@
-import ProfileHeader from "@/components/shared/ProfileHeader";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
+import ProfileHeader from "@/components/shared/ProfileHeader";
+import ConvergsTab from "@/components/shared/ConvergsTab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import { profileTabs } from "@/constants";
-import ConvergsTab from "@/components/shared/ConvergsTab";
 
-const Page = async ({ params }: { params: { id: string } }) => {
+async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
 
   if (!user) return null;
@@ -42,7 +42,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
                 <p className=" max-sm:hidden">{tab.label}</p>
                 {tab.label === "Convergs" && (
                   <p className=" ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
-                    {userInfo?.convergs?.length}
+                    {userInfo.convergs.length}
                   </p>
                 )}
               </TabsTrigger>
@@ -54,6 +54,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
               value={tab.value}
               className="w-full text-light-1"
             >
+              {/* @ts-ignore */}
               <ConvergsTab
                 currentUserId={user.id}
                 accountId={userInfo.id}
@@ -65,6 +66,6 @@ const Page = async ({ params }: { params: { id: string } }) => {
       </div>
     </section>
   );
-};
+}
 
 export default Page;

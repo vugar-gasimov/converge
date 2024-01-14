@@ -6,7 +6,9 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-const Page = async ({ params }: { params: { id: string } }) => {
+export const revalidate = 0;
+
+async function Page({ params }: { params: { id: string } }) {
   if (!params.id) return null;
 
   const user = await currentUser();
@@ -23,7 +25,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
         <ConvergCard
           key={converg._id}
           id={converg._id}
-          currentUserId={user?.id || ""}
+          currentUserId={user.id}
           parentId={converg.parentId}
           content={converg.text}
           author={converg.author}
@@ -34,8 +36,8 @@ const Page = async ({ params }: { params: { id: string } }) => {
       </div>
       <div className="mt-7">
         <Comment
-          convergId={converg.id}
-          currentUserImg={userInfo.image}
+          convergId={params.id}
+          currentUserImg={user.imageUrl}
           currentUserId={JSON.stringify(userInfo._id)}
         />
       </div>
@@ -45,7 +47,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
           <ConvergCard
             key={childItem._id}
             id={childItem._id}
-            currentUserId={childItem?.id || ""}
+            currentUserId={user.id}
             parentId={childItem.parentId}
             content={childItem.text}
             author={childItem.author}
@@ -58,5 +60,5 @@ const Page = async ({ params }: { params: { id: string } }) => {
       </div>
     </section>
   );
-};
+}
 export default Page;
