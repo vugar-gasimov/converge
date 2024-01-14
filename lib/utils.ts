@@ -28,12 +28,12 @@ export function formatDateString(dateString: string) {
   return `${time} - ${formattedDate}`;
 }
 
-export function formatThreadCount(count: number): string {
+export function formatConvergCount(count: number): string {
   if (count === 0) {
-    return "No Threads";
+    return "No Convergs";
   } else {
-    const threadCount = count.toString().padStart(2, "0");
-    const threadWord = count === 1 ? "Thread" : "Threads";
-    return `${threadCount} ${threadWord}`;
+    const convergCount = count.toString().padStart(2, "0");
+    const convergWord = count === 1 ? "Converg" : "Convergs";
+    return `${convergCount} ${convergWord}`;
   }
 }

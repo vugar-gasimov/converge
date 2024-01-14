@@ -29,7 +29,7 @@ export async function createConverg({
 
     // Update user model
     await User.findByIdAndUpdate(author, {
-      $push: { converge: createdConverg._id },
+      $push: { convergs: createdConverg._id },
     });
 
     revalidatePath(path);
