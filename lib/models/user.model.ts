@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   image: String,
   bio: String,
-  converge: [
+  convergs: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Converg",
