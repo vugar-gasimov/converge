@@ -1,12 +1,20 @@
-// import { UserButton } from "@clerk/nextjs";
+import Pagination from "@/components/shared/Pagination";
 
 import ConvergCard from "@/components/cards/ConvergCard";
 import { fetchPosts } from "@/lib/actions/converg.actions";
+import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
-  const result = await fetchPosts(1, 30);
   const user = await currentUser();
+  if (!user) return null;
+  const userInfo = await fetchUser(user.id);
+  if (!userInfo?.onboarded) redirect("/onboarding");
+  const result = await fetchPosts(
+    searchParams.page ? +searchParams.page : 1,
+    30
+  );
 
   return (
     <>
@@ -21,7 +29,7 @@ export default async function Home() {
               <ConvergCard
                 key={post._id}
                 id={post._id}
-                currentUserId={user?.id || ""}
+                currentUserId={user.id}
                 parentId={post.parentId}
                 content={post.text}
                 author={post.author}
@@ -33,6 +41,11 @@ export default async function Home() {
           </>
         )}
       </section>
+      <Pagination
+        path="/"
+        pageNumber={searchParams?.page ? +searchParams.page : 1}
+        isNext={result.isNext}
+      />
     </>
   );
 }

@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -15,28 +14,21 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "../ui/textarea";
 import { usePathname, useRouter } from "next/navigation";
+import { useOrganization } from "@clerk/nextjs";
 
-// import { updateUser } from "@/lib/actions/user.actions";
 import { ConvergValidation } from "@/lib/validations/converg";
 import { createConverg } from "@/lib/actions/converg.actions";
 
 interface Props {
-  user: {
-    id: string;
-    objectId: string;
-    username: string;
-    name: string;
-    bio: string;
-    image: string;
-  };
-  btnTitle: string;
+  userId: string;
 }
 
-function PostConverg({ userId }: { userId: string }) {
+function PostConverg({ userId }: Props) {
   const router = useRouter();
   const pathname = usePathname();
+  const { organization } = useOrganization();
 
-  const form = useForm({
+  const form = useForm<z.infer<typeof ConvergValidation>>({
     resolver: zodResolver(ConvergValidation),
     defaultValues: {
       converg: "",
@@ -45,12 +37,15 @@ function PostConverg({ userId }: { userId: string }) {
   });
 
   const onSubmit = async (values: z.infer<typeof ConvergValidation>) => {
+    console.log("ORG ID:", organization);
+
     await createConverg({
       text: values.converg,
       author: userId,
-      communityId: null,
+      communityId: organization ? organization.id : null,
       path: pathname,
     });
+
     router.push("/");
   };
 

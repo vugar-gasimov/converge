@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import Converg from "../models/converg.model";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose";
+import Community from "../models/community.model";
 
 interface Params {
   text: string;
@@ -21,10 +22,15 @@ export async function createConverg({
   try {
     connectToDB();
 
+    const communityIdObject = await Community.findOne(
+      { id: communityId },
+      { _id: 1 }
+    );
+
     const createdConverg = await Converg.create({
       text,
       author,
-      community: null,
+      community: communityIdObject,
     });
 
     // Update user model
@@ -32,10 +38,15 @@ export async function createConverg({
       $push: { convergs: createdConverg._id },
     });
 
+    if (communityIdObject) {
+      // Update Community model
+      await Community.findByIdAndUpdate(communityIdObject, {
+        $push: { convergs: createdConverg._id },
+      });
+    }
+
     revalidatePath(path);
   } catch (error: any) {
-    const errorMessage =
-      error.message || "An error occurred while creating converg.";
     throw new Error(`Error creating converg: ${error.message}`);
   }
 }
@@ -73,14 +84,19 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   return { posts, isNext };
 }
 
-export async function fetchConvergById(id: string) {
+export async function fetchConvergById(convergId: string) {
   connectToDB();
   try {
     // TODO: Populate Community
-    const converg = await Converg.findById(id)
+    const converg = await Converg.findById(convergId)
       .populate({
         path: "author",
         model: User,
+        select: "_id id name image",
+      })
+      .populate({
+        path: "community",
+        model: Community,
         select: "_id id name image",
       })
       .populate({

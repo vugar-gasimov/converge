@@ -142,6 +142,7 @@ export async function getActivity(userId: string) {
     const childConvergIds = userConvergs.reduce((acc, userConverg) => {
       return acc.concat(userConverg.children);
     }, []);
+
     const replies = await Converg.find({
       _id: { $in: childConvergIds },
       author: { $ne: userId },

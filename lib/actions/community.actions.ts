@@ -14,7 +14,7 @@ export async function createCommunity(
   username: string,
   image: string,
   bio: string,
-  createdById: string // Change the parameter name to reflect it's an id
+  createdById: string
 ) {
   try {
     connectToDB();
