@@ -18,7 +18,7 @@ async function Page({ params }: { params: { id: string } }) {
   return (
     <section>
       <ProfileHeader
-        accountId={communityDetails.id}
+        accountId={communityDetails.createdBy.id}
         authUserId={user.id}
         name={communityDetails.name}
         username={communityDetails.username}
@@ -49,6 +49,7 @@ async function Page({ params }: { params: { id: string } }) {
           </TabsList>
 
           <TabsContent value="convergs" className="w-full text-light-1">
+            {/* @ts-ignore */}
             <ConvergsTab
               currentUserId={user.id}
               accountId={communityDetails._id}
@@ -57,7 +58,7 @@ async function Page({ params }: { params: { id: string } }) {
           </TabsContent>
           <TabsContent value="members" className="w-full text-light-1">
             <section className=" mt-9 flex flex-col gap-10">
-              {communityDetails?.members.map((member: any) => (
+              {communityDetails.members.map((member: any) => (
                 <UserCard
                   key={member.id}
                   id={member.id}
@@ -70,6 +71,7 @@ async function Page({ params }: { params: { id: string } }) {
             </section>
           </TabsContent>
           <TabsContent value="requests" className="w-full text-light-1">
+            {/* @ts-ignore */}
             <ConvergsTab
               currentUserId={user.id}
               accountId={communityDetails._id}

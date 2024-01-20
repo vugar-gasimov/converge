@@ -9,7 +9,11 @@ import ConvergsTab from "@/components/shared/ConvergsTab";
 import UserCard from "@/components/cards/UserCard";
 import Pagination from "@/components/shared/Pagination";
 
-const Page = async () => {
+const Page = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) => {
   const user = await currentUser();
 
   if (!user) return null;
@@ -21,7 +25,7 @@ const Page = async () => {
   const result = await fetchUsers({
     userId: user.id,
     searchString: searchParams.q,
-    pageNumber: searchParams?.page ? +SearchParamsContext.page : 1,
+    pageNumber: searchParams?.page ? +searchParams.page : 1,
     pageSize: 25,
   });
 
