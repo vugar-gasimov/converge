@@ -1,6 +1,5 @@
-import Pagination from "@/components/shared/Pagination";
-
 import ConvergCard from "@/components/cards/ConvergCard";
+import Pagination from "@/components/shared/Pagination";
 import { fetchPosts } from "@/lib/actions/converg.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";

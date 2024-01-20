@@ -48,3 +48,5 @@ function Pagination({ pageNumber, isNext, path }: Props) {
     </div>
   );
 }
+
+export default Pagination;

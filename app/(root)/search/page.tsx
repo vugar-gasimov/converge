@@ -7,6 +7,7 @@ import Image from "next/image";
 import { profileTabs } from "@/constants";
 import ConvergsTab from "@/components/shared/ConvergsTab";
 import UserCard from "@/components/cards/UserCard";
+import Pagination from "@/components/shared/Pagination";
 
 const Page = async () => {
   const user = await currentUser();
@@ -19,8 +20,8 @@ const Page = async () => {
 
   const result = await fetchUsers({
     userId: user.id,
-    searchString: "",
-    pageNumber: 1,
+    searchString: searchParams.q,
+    pageNumber: searchParams?.page ? +SearchParamsContext.page : 1,
     pageSize: 25,
   });
 
@@ -48,6 +49,11 @@ const Page = async () => {
           </>
         )}
       </div>
+      <Pagination
+        path="search"
+        pageNumber={searchParams?.page ? +searchParams.page : 1}
+        isNext={result.isNext}
+      />
     </section>
   );
 };

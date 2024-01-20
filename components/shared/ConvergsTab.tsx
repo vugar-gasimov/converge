@@ -1,6 +1,7 @@
 import { fetchUserPosts } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
 import ConvergCard from "../cards/ConvergCard";
+import { fetchCommunityPosts } from "@/lib/actions/community.actions";
 
 interface Props {
   currentUserId: string;
@@ -14,7 +15,13 @@ const ConvergsTab = async ({
   accountType,
 }: Props) => {
   // Fetch profile convergs
-  let result = await fetchUserPosts(accountId);
+  let result: any;
+
+  if (accountType === "Community") {
+    result = await fetchCommunityPosts(accountId);
+  } else {
+    result = await fetchUserPosts(accountId);
+  }
 
   if (!result) redirect("/");
 
@@ -36,7 +43,11 @@ const ConvergsTab = async ({
                   id: converg.author.id,
                 }
           }
-          community={converg.community} // TODO
+          community={
+            accountType === "Community"
+              ? { name: result.name, id: result.id, image: result.image }
+              : converg.community
+          }
           createdAt={converg.createdAt}
           comments={converg.children}
         />
