@@ -47,9 +47,12 @@ const ConvergCard = ({
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row  gap-4">
           <div className="flex flex-col items-center">
-            <Link className="relative h-11 w-11" href={`/profile/${author.id}`}>
+            <Link
+              className="relative h-11 w-11"
+              href={`/profile/${author?.id}`}
+            >
               <Image
-                src={author.image}
+                src={author?.image}
                 alt="Profile image"
                 fill
                 className="cursor-pointer rounded-full"
@@ -60,9 +63,9 @@ const ConvergCard = ({
           </div>
 
           <div className="flex w-full flex-col">
-            <Link className="w-fit" href={`/profile/${author.id}`}>
+            <Link className="w-fit" href={`/profile/${author?.id}`}>
               <h4 className="cursor-pointer text-base-semibold text-light-1">
-                {author.name}
+                {author?.name}
               </h4>
             </Link>
 
