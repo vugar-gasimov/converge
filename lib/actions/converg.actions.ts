@@ -223,13 +223,13 @@ export async function deleteConverg(id: string, path: string): Promise<void> {
     // Update User model
     await User.updateMany(
       { _id: { $in: Array.from(uniqueAuthorIds) } },
-      { $pull: { threads: { $in: descendantConvergIds } } }
+      { $pull: { convergs: { $in: descendantConvergIds } } }
     );
 
     // Update Community model
     await Community.updateMany(
       { _id: { $in: Array.from(uniqueCommunityIds) } },
-      { $pull: { threads: { $in: descendantConvergIds } } }
+      { $pull: { convergs: { $in: descendantConvergIds } } }
     );
 
     revalidatePath(path);

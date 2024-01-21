@@ -1,15 +1,10 @@
-import ProfileHeader from "@/components/shared/ProfileHeader";
-import { fetchUser, fetchUsers } from "@/lib/actions/user.actions";
-import { currentUser } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
-
-import Image from "next/image";
-import { profileTabs } from "@/constants";
-import ConvergsTab from "@/components/shared/ConvergsTab";
-import UserCard from "@/components/cards/UserCard";
-import Pagination from "@/components/shared/Pagination";
 import { fetchCommunities } from "@/lib/actions/community.actions";
+import { currentUser } from "@clerk/nextjs";
+import { fetchUser } from "@/lib/actions/user.actions";
+import { redirect } from "next/navigation";
 import CommunityCard from "@/components/cards/CommunityCard";
+import Pagination from "@/components/shared/Pagination";
+import Searchbar from "@/components/shared/Searchbar";
 
 const Page = async ({
   searchParams,
@@ -32,11 +27,13 @@ const Page = async ({
 
   return (
     <section>
-      <h1 className="head-text mb-10">Search</h1>
+      <h1 className="head-text mb-10">Communities</h1>
 
-      {/* Search Bar */}
+      <div className="mt-5">
+        <Searchbar routeType="communities" />
+      </div>
 
-      <div className="mt-14 flex flex-col gap-9">
+      <div className="mt-9 flex flex-wrap gap-4">
         {result.communities.length === 0 ? (
           <p className="no-result">No communities</p>
         ) : (

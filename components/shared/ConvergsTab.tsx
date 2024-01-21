@@ -3,6 +3,33 @@ import { redirect } from "next/navigation";
 import ConvergCard from "../cards/ConvergCard";
 import { fetchCommunityPosts } from "@/lib/actions/community.actions";
 
+interface Result {
+  name: string;
+  image: string;
+  id: string;
+  convergs: {
+    _id: string;
+    text: string;
+    parentId: string | null;
+    author: {
+      name: string;
+      image: string;
+      id: string;
+    };
+    community: {
+      id: string;
+      name: string;
+      image: string;
+    } | null;
+    createdAt: string;
+    children: {
+      author: {
+        image: string;
+      };
+    }[];
+  }[];
+}
+
 interface Props {
   currentUserId: string;
   accountId: string;
@@ -14,8 +41,7 @@ const ConvergsTab = async ({
   accountId,
   accountType,
 }: Props) => {
-  // Fetch profile convergs
-  let result: any;
+  let result: Result;
 
   if (accountType === "Community") {
     result = await fetchCommunityPosts(accountId);
@@ -27,7 +53,7 @@ const ConvergsTab = async ({
 
   return (
     <section className="mt-9 flex flex-col gap-10">
-      {result.convergs.map((converg: any) => (
+      {result.convergs.map((converg) => (
         <ConvergCard
           key={converg._id}
           id={converg._id}
