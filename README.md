@@ -1,7 +1,7 @@
 <div align="center">
   <br />
    
-      <img src="https://github.com/vugar-gasimov/converge/assets/converge.png" alt="Project Banner">
+      <img src="https://github.com/vugar-gasimov/converge/public/assets/converge.png" alt="Project Banner">
    
   <br />
 
@@ -1756,19 +1756,5 @@ export function formatConvergCount(count: number): string {
 ```
 
 </details>
-
-## <a name="more">🚀 More</a>
-
-**Advance your skills with Next.js 14 Pro Course**
-
-Enjoyed creating this project? Dive deeper into our PRO courses for a richer learning adventure. They're packed with detailed explanations, cool features, and exercises to boost your skills. Give it a go!
-
-<img src="https://github.com/sujatagunale/EasyRead/assets/151519281/557837ce-f612-4530-ab24-189e75133c71" alt="Project Banner">
-
-<br />
-<br />
-
-<img src="https://github.com/sujatagunale/EasyRead/assets/151519281/fed352ad-f27b-400d-9b8f-c7fe628acb84" alt="Project Banner">
-</a>
 
 #
