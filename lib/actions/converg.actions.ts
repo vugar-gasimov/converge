@@ -167,3 +167,73 @@ export async function addCommentToConverg(
     throw new Error(`Error adding comment to converg: ${error.message}`);
   }
 }
+
+async function fetchAllChildConvergs(convergId: string): Promise<any[]> {
+  const childConvergs = await Converg.find({ parentId: convergId });
+
+  const descendantConvergs = [];
+  for (const childConverg of childConvergs) {
+    const descendants = await fetchAllChildConvergs(childConverg._id);
+    descendantConvergs.push(childConverg, ...descendants);
+  }
+
+  return descendantConvergs;
+}
+
+export async function deleteConverg(id: string, path: string): Promise<void> {
+  try {
+    connectToDB();
+
+    // Find the converg to be deleted (the main converg)
+    const mainConverg = await Converg.findById(id).populate("author community");
+
+    if (!mainConverg) {
+      throw new Error("Converg not found");
+    }
+
+    // Fetch all child convergs and their descendants recursively
+    const descendantConvergs = await fetchAllChildConvergs(id);
+
+    // Get all descendant converg IDs including the main converg ID and child converg IDs
+    const descendantConvergIds = [
+      id,
+      ...descendantConvergs.map((converg) => converg._id),
+    ];
+
+    // Extract the authorIds and communityIds to update User and Community models respectively
+    const uniqueAuthorIds = new Set(
+      [
+        ...descendantConvergs.map((converg) => converg.author?._id?.toString()), // Use optional chaining to handle possible undefined values
+        mainConverg.author?._id?.toString(),
+      ].filter((id) => id !== undefined)
+    );
+
+    const uniqueCommunityIds = new Set(
+      [
+        ...descendantConvergs.map(
+          (converg) => converg.community?._id?.toString()
+        ), // Use optional chaining to handle possible undefined values
+        mainConverg.community?._id?.toString(),
+      ].filter((id) => id !== undefined)
+    );
+
+    // Recursively delete child threads and their descendants
+    await Converg.deleteMany({ _id: { $in: descendantConvergIds } });
+
+    // Update User model
+    await User.updateMany(
+      { _id: { $in: Array.from(uniqueAuthorIds) } },
+      { $pull: { threads: { $in: descendantConvergIds } } }
+    );
+
+    // Update Community model
+    await Community.updateMany(
+      { _id: { $in: Array.from(uniqueCommunityIds) } },
+      { $pull: { threads: { $in: descendantConvergIds } } }
+    );
+
+    revalidatePath(path);
+  } catch (error: any) {
+    throw new Error(`Failed to delete converg: ${error.message}`);
+  }
+}
