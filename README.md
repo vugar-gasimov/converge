@@ -1,8 +1,5 @@
 <div align="center">
-  <br />
-         <img src="https://github.com/vugar-gasimov/converge/tree/main/public/converge.png" alt="Project Banner">
-     <br />
-
+  
   <div>
     <img src="https://img.shields.io/badge/-Next_JS-black?style=for-the-badge&logoColor=white&logo=nextdotjs&color=000000" alt="nextdotjs" />
     <img src="https://img.shields.io/badge/-MongoDB-black?style=for-the-badge&logoColor=white&logo=mongodb&color=47A248" alt="mongodb" />
