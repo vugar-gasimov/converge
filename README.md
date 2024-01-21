@@ -1,6 +1,6 @@
 <div align="center">
   <br />
-         <img src="https://github.com/vugar-gasimov/converge/public/converge.png" alt="Project Banner">
+         <img src="https://github.com/vugar-gasimov/converge/tree/main/public/converge.png" alt="Project Banner">
      <br />
 
   <div>
