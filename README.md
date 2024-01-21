@@ -26,8 +26,6 @@
 
 Build a full stack Converg using Next.js 14+ with a redesigned look transformed from a Figma design, user interaction to community management, technical implementation, and various features, including nested deep comments, notifications, real-time-search, and more.
 
-If you're getting started and need assistance or face any bugs, join our active Discord community with over 27k+ members. It's a place where people help each other out.
-
 ## <a name="tech-stack">⚙️ Tech Stack</a>
 
 - Next.js
