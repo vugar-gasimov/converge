@@ -1,7 +1,7 @@
 <div align="center">
   <br />
    
-      <img src="https://github.com/vugar-gasimov/converge/public/assets/converge.png" alt="Project Banner">
+      <img src="https://github.com/vugar-gasimov/converge/public/assets/converge.png" alt="Project Banner" />
    
   <br />
 
@@ -26,8 +26,6 @@
 3. 🔋 [Features](#features)
 4. 🤸 [Quick Start](#quick-start)
 5. 🕸️ [Snippets](#snippets)
-6. 🔗 [Links](#links)
-7. 🚀 [More](#more)
 
 ## <a name="introduction">🤖 Introduction</a>
 
