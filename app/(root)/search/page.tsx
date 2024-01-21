@@ -8,6 +8,7 @@ import { profileTabs } from "@/constants";
 import ConvergsTab from "@/components/shared/ConvergsTab";
 import UserCard from "@/components/cards/UserCard";
 import Pagination from "@/components/shared/Pagination";
+import Searchbar from "@/components/shared/Searchbar";
 
 const Page = async ({
   searchParams,
@@ -33,7 +34,7 @@ const Page = async ({
     <section>
       <h1 className="head-text mb-10">Search</h1>
 
-      {/* Search Bar */}
+      <Searchbar routeType="search" />
 
       <div className="mt-14 flex flex-col gap-9">
         {result.users.length === 0 ? (
